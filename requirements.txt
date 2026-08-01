@@ -1,36 +1,4 @@
-
-import os
-import sys
-import threading
-import time
-from datetime import datetime
-import webbrowser
-from collections import deque
-
-from engine.market_structure import MarketStructureEngine
-from engine.trade_manager import TradeManager
-from engine.fvg_engine import FVGEngine
-from engine.market_structure import MarketStructureEngine
-from engine.order_block_engine import OrderBlockEngine
-from engine.liquidity_engine import LiquidityEngine
-from engine.fvg_engine import FVGEngine
-from engine.multi_timeframe_engine import MultiTimeframeEngine
-from engine.trade_manager import TradeManager
-
 flask
-
-fvg_engine = FVGEngine()
-
-import os
-
-print(os.path.abspath(__file__))
-print(os.path.exists(__file__))
-
-try:
-    from flask import Flask, jsonify, request, render_template_string
-    import ccxt
-    import pandas as pd
-    import pandas_ta as ta
-except ImportError:
-    print("⚠️ Mungojnë libraritë. Instalo: pip install flask ccxt pandas pandas_ta")
-    sys.exit(1)
+ccxt
+pandas
+pandas-ta
