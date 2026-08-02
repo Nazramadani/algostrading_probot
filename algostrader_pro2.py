@@ -918,11 +918,9 @@ DASHBOARD_HTML = """
         }
     </style>
 </head>
-<!-- Ndryshimi 1: 'flex-col md:flex-row' bën që sidebar-i të rrijë lart në telefon dhe majtas në desktop -->
 <body class="min-h-screen flex flex-col md:flex-row bg-[#0b1120] overflow-x-hidden md:overflow-hidden">
 
     <!-- SIDEBAR (Majtas në PC / Lart në Telefon) -->
-    <!-- Ndryshimi 2: 'w-full md:w-80' dhe heqja e lartësisë fikse për telefonat -->
     <div class="w-full md:w-80 bg-slate-900 border-b md:border-b-0 md:border-r border-slate-800 flex flex-col live-border z-10 relative">
         <div class="p-4 border-b border-slate-800">
             <h1 class="text-xl font-bold flex items-center gap-2 text-white">
@@ -1110,7 +1108,6 @@ DASHBOARD_HTML = """
     </div>
 
     <!-- MAIN CONTENT (Djathtas në PC / Poshtë në Telefon) -->
-    <!-- Ndryshimi 3: Shtimi i 'md:h-screen' për ta lënë të rrëshqasë natyrshëm në telefon -->
     <div class="flex-1 flex flex-col md:h-screen md:overflow-y-auto bg-[#0b1120] p-4 md:p-6 space-y-6 relative">
         
         <div class="flex justify-between items-center mt-4 md:mt-0">
@@ -1123,7 +1120,6 @@ DASHBOARD_HTML = """
         </div>
 
         <!-- TOP ACCOUNT STATS -->
-        <!-- Ndryshimi 4: 'grid-cols-2 lg:grid-cols-4' - 2 kolona në tel, 4 në PC -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
             <div class="bg-slate-900 border border-slate-800 p-4 md:p-5 rounded-2xl flex flex-col justify-center">
                 <span class="text-[10px] md:text-xs text-slate-400 font-medium mb-1">Balanca e Llogarisë</span>
@@ -1160,10 +1156,9 @@ DASHBOARD_HTML = """
         </div>
 
         <!-- LIVE POSITION CARDS -->
-        <!-- Ndryshimi 5: 1 kolonë në telefon, 3 në kompjuter -->
         <div id="position-cards" class="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-4 mb-2 md:mb-5"></div>
 
-        <!-- LIVE OPEN POSITIONS (Tabela) -->
+        <!-- LIVE OPEN POSITIONS -->
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 md:p-5 overflow-hidden w-full">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-sm font-bold text-slate-300 flex items-center gap-2">
@@ -1175,7 +1170,6 @@ DASHBOARD_HTML = """
                 </span>
             </div>
             <div class="overflow-x-auto w-full">
-                <!-- Klasa w-[600px] md:w-full detyron tabelën të bëhet e lëvizshme majtas-djathtas pa prishur ekranin -->
                 <table class="w-[700px] md:w-full text-xs text-left">
                     <thead class="text-slate-500 border-b border-slate-800">
                         <tr>
@@ -1201,7 +1195,6 @@ DASHBOARD_HTML = """
         </div>
 
         <!-- TRADINGVIEW -->
-        <!-- Ndryshimi 6: Lartësia e TradingView u bë h-[400px] për telefonat dhe h-[65vh] për PC -->
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-1 overflow-hidden relative w-full h-[400px] lg:h-[65vh]">
             <iframe
                 id="tv-chart"
@@ -1212,7 +1205,6 @@ DASHBOARD_HTML = """
         </div>
 
         <!-- Bottom Row (Logs & Stats) -->
-        <!-- Ndryshimi 7: 1 kolonë në tel, 3 kolona në PC -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 pb-10 md:pb-0">
             <!-- Trade History -->
             <div class="col-span-1 lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-4 md:p-5 flex flex-col h-64 w-full overflow-hidden">
@@ -1262,16 +1254,10 @@ DASHBOARD_HTML = """
             <button onclick="document.getElementById('error-modal').classList.add('hidden')" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-medium py-2 rounded-lg transition-colors">Kuptova</button>
         </div>
     </div>
-    
-    <!-- Scripts per konfigurimin e Ikonave lucide -->
+
     <script>
         lucide.createIcons();
-        // Kodi yt javascript vazhdon këtu poshtë...
-    </script>
-</body>
-</html>
-"""
- 
+
         // Menaxhimi i Liste se Cifteve (Pairs) UI
         const availablePairs = ['BTC/USDT', 'ETH/USDT', 'SOL/USDT', 'XAU/USDT', 'XRP/USDT', 'DOGE/USDT', 'ORCA/USDT', 'AVAX/USDT', 'LINK/USDT', 'AIOT/USDT', 'PEPE/USDT', 'FLOKI/USDT'];
         let selectedPairs = new Set(['BTC/USDT']);
