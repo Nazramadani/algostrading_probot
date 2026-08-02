@@ -383,7 +383,7 @@ def monitor_positions():
                 f"Monitor Error: {e}",
                 "GABIM"
             )
-        time.sleep(1)
+        time.sleep(5)
 
 # =====================================================================
 # LOGJIKA E TREGTIMIT
@@ -838,6 +838,7 @@ def analizo_dhe_tregto():
 
             except Exception as e:
                 shto_log(f"Gabim gjatë ekzekutimit te {symbol}: {e}", "GABIM")
+                time.sleep(3)
 
         time.sleep(60)
 
