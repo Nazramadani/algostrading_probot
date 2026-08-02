@@ -852,13 +852,14 @@ DASHBOARD_HTML = """
 <html lang="sq">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
     <title>NazRmd ProBot - LIVE</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0b1120; color: #f8fafc; }
-        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: #0f172a; }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
         .live-border { border: 1px solid #ef4444; box-shadow: 0 0 10px rgba(239, 68, 68, 0.2); }
@@ -917,10 +918,12 @@ DASHBOARD_HTML = """
         }
     </style>
 </head>
-<body class="h-screen flex overflow-hidden">
+<!-- Ndryshimi 1: 'flex-col md:flex-row' bën që sidebar-i të rrijë lart në telefon dhe majtas në desktop -->
+<body class="min-h-screen flex flex-col md:flex-row bg-[#0b1120] overflow-x-hidden md:overflow-hidden">
 
-    <!-- SIDEBAR (Majtas) -->
-    <div class="w-80 bg-slate-900 border-r border-slate-800 flex flex-col live-border z-10 relative">
+    <!-- SIDEBAR (Majtas në PC / Lart në Telefon) -->
+    <!-- Ndryshimi 2: 'w-full md:w-80' dhe heqja e lartësisë fikse për telefonat -->
+    <div class="w-full md:w-80 bg-slate-900 border-b md:border-b-0 md:border-r border-slate-800 flex flex-col live-border z-10 relative">
         <div class="p-4 border-b border-slate-800">
             <h1 class="text-xl font-bold flex items-center gap-2 text-white">
                 <i data-lucide="activity" class="text-rose-500"></i> NazRmd ProBot <span class="text-xs font-normal">GUI</span>
@@ -928,9 +931,9 @@ DASHBOARD_HTML = """
             <p class="text-[10px] text-rose-400 mt-1 uppercase tracking-wider font-bold">Llogaria Reale</p>
         </div>
         
-        <div class="flex-1 overflow-y-auto p-4 space-y-5">
+        <div class="flex-1 md:overflow-y-auto p-4 space-y-5">
             
-            <!-- API Keys (E Fshehur si Dropdown per te kursyer hapesire) -->
+            <!-- API Keys -->
             <details class="group bg-slate-950/50 rounded-xl border border-slate-800">
                 <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-3 text-sm text-slate-300">
                     <span class="flex items-center gap-2"><i data-lucide="key" class="w-4 h-4"></i> Lidhja me API</span>
@@ -946,13 +949,12 @@ DASHBOARD_HTML = """
                 </div>
             </details>
 
-            <!-- Indikatorët Aktivë (Dizajni i Kerkuar) -->
+            <!-- Indikatorët Aktivë -->
             <div class="space-y-3">
                 <div class="flex justify-between items-center">
                     <h2 class="text-sm font-semibold text-white flex items-center gap-2 bg-blue-600/20 px-2 py-1 rounded">
                         <i data-lucide="trending-up" class="w-4 h-4 text-blue-400"></i> Indikatorët Aktivë
                     </h2>
-                    <!-- Timeframe zgjedhja -->
                     <select id="timeframe" class="bg-slate-950 border border-slate-700 rounded text-xs px-2 py-1 text-slate-300 focus:outline-none focus:border-blue-500">
                         <option value="1m">1m</option>
                         <option value="5m" selected>5m</option>
@@ -975,7 +977,7 @@ DASHBOARD_HTML = """
                             </div>
                             <button onclick="toggleSettings('settings-ema')" class="text-slate-500 hover:text-slate-300"><i data-lucide="settings" class="w-4 h-4"></i></button>
                         </div>
-                        <div id="settings-ema" class="indicator-settings mt-2 border-t border-slate-800 pt-2 grid grid-cols-2 gap-2 px-8">
+                        <div id="settings-ema" class="indicator-settings mt-2 border-t border-slate-800 pt-2 grid grid-cols-2 gap-2 px-4 md:px-8">
                             <div>
                                 <label class="text-[9px] text-slate-500">E Shpejtë</label>
                                 <input type="number" id="val-ema-fast" value="50" onchange="updateLabel('ema')" class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs text-slate-300 text-center">
@@ -999,7 +1001,7 @@ DASHBOARD_HTML = """
                             </div>
                             <button onclick="toggleSettings('settings-atr')" class="text-slate-500 hover:text-slate-300"><i data-lucide="settings" class="w-4 h-4"></i></button>
                         </div>
-                        <div id="settings-atr" class="indicator-settings mt-2 border-t border-slate-800 pt-2 px-8">
+                        <div id="settings-atr" class="indicator-settings mt-2 border-t border-slate-800 pt-2 px-4 md:px-8">
                             <label class="text-[9px] text-slate-500">Gjatësia</label>
                             <input type="number" id="val-atr-len" value="14" onchange="updateLabel('atr')" class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs text-slate-300 text-center">
                         </div>
@@ -1017,7 +1019,7 @@ DASHBOARD_HTML = """
                             </div>
                             <button onclick="toggleSettings('settings-rsi')" class="text-slate-500 hover:text-slate-300"><i data-lucide="settings" class="w-4 h-4"></i></button>
                         </div>
-                        <div id="settings-rsi" class="indicator-settings mt-2 border-t border-slate-800 pt-2 grid grid-cols-3 gap-2 px-8">
+                        <div id="settings-rsi" class="indicator-settings mt-2 border-t border-slate-800 pt-2 grid grid-cols-3 gap-2 px-4 md:px-8">
                             <div>
                                 <label class="text-[9px] text-slate-500">Gjatësia</label>
                                 <input type="number" id="val-rsi-len" value="14" onchange="updateLabel('rsi')" class="w-full bg-slate-900 border border-slate-700 rounded px-1 py-1 text-xs text-slate-300 text-center">
@@ -1045,7 +1047,7 @@ DASHBOARD_HTML = """
                             </div>
                             <button onclick="toggleSettings('settings-vol')" class="text-slate-500 hover:text-slate-300"><i data-lucide="settings" class="w-4 h-4"></i></button>
                         </div>
-                        <div id="settings-vol" class="indicator-settings mt-2 border-t border-slate-800 pt-2 px-8">
+                        <div id="settings-vol" class="indicator-settings mt-2 border-t border-slate-800 pt-2 px-4 md:px-8">
                             <label class="text-[9px] text-slate-500">Gjatësia Mesatare</label>
                             <input type="number" id="val-vol-len" value="20" onchange="updateLabel('vol')" class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs text-slate-300 text-center">
                         </div>
@@ -1064,7 +1066,7 @@ DASHBOARD_HTML = """
                 </div>
             </div>
 
-            <!-- Tregtimi (Pairs) Dizajni i Ri -->
+            <!-- Tregtimi (Pairs) -->
             <div class="space-y-3 pt-2">
                 <h2 class="text-sm font-semibold text-slate-300 flex items-center gap-2">
                     <i data-lucide="list" class="w-4 h-4 text-slate-400"></i> Tregtimi (Pairs)
@@ -1075,7 +1077,7 @@ DASHBOARD_HTML = """
             </div>
 
             <!-- Risk Management Box -->
-            <div class="space-y-3 pt-4 border-t border-slate-800">
+            <div class="space-y-3 pt-4 border-t border-slate-800 mb-6 md:mb-0">
                 <h2 class="text-sm font-semibold text-slate-300 flex items-center gap-2">
                     <i data-lucide="pie-chart" class="w-4 h-4 text-slate-400"></i> Risku & Kapitali
                 </h2>
@@ -1100,83 +1102,81 @@ DASHBOARD_HTML = """
             </div>
         </div>
 
-        <div class="p-4 border-t border-slate-800 bg-slate-900">
+        <div class="p-4 border-t border-slate-800 bg-slate-900 mt-auto md:mt-0">
             <button id="btn-toggle" onclick="toggleBot()" class="w-full bg-rose-600 hover:bg-rose-500 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-rose-900/20">
                 <i data-lucide="play" class="w-4 h-4"></i> Nis Skanimin
             </button>
         </div>
     </div>
 
-    <!-- MAIN CONTENT (Djathtas) -->
-    <div class="flex-1 flex flex-col h-screen overflow-y-auto bg-[#0b1120] p-6 space-y-6 relative">
+    <!-- MAIN CONTENT (Djathtas në PC / Poshtë në Telefon) -->
+    <!-- Ndryshimi 3: Shtimi i 'md:h-screen' për ta lënë të rrëshqasë natyrshëm në telefon -->
+    <div class="flex-1 flex flex-col md:h-screen md:overflow-y-auto bg-[#0b1120] p-4 md:p-6 space-y-6 relative">
         
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between items-center mt-4 md:mt-0">
             <div>
-                <h2 class="text-2xl font-bold text-white tracking-tight">Paneli i Kontrollit LIVE</h2>
+                <h2 class="text-xl md:text-2xl font-bold text-white tracking-tight">Paneli i Kontrollit LIVE</h2>
                 <div id="status-badge" class="mt-1 text-xs font-medium text-slate-400 flex items-center gap-1.5">
                     <span class="w-2 h-2 rounded-full bg-slate-500"></span> Boti Joaktiv
                 </div>
             </div>
         </div>
 
-        <!-- ===================================================== -->
         <!-- TOP ACCOUNT STATS -->
-        <!-- ===================================================== -->
-        <div class="grid grid-cols-4 gap-4">
-            <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl flex flex-col justify-center">
-                <span class="text-xs text-slate-400 font-medium mb-1">Balanca e Llogarisë</span>
-                <span id="stat-balance" class="text-3xl font-bold text-white">$0.00</span>
+        <!-- Ndryshimi 4: 'grid-cols-2 lg:grid-cols-4' - 2 kolona në tel, 4 në PC -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+            <div class="bg-slate-900 border border-slate-800 p-4 md:p-5 rounded-2xl flex flex-col justify-center">
+                <span class="text-[10px] md:text-xs text-slate-400 font-medium mb-1">Balanca e Llogarisë</span>
+                <span id="stat-balance" class="text-xl md:text-3xl font-bold text-white">$0.00</span>
             </div>
-            <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl flex flex-col justify-center">
-                <span class="text-xs text-slate-400 font-medium mb-1">Ekuiteti (Equity)</span>
-                <span id="stat-equity" class="text-3xl font-bold text-amber-400">$0.00</span>
+            <div class="bg-slate-900 border border-slate-800 p-4 md:p-5 rounded-2xl flex flex-col justify-center">
+                <span class="text-[10px] md:text-xs text-slate-400 font-medium mb-1">Ekuiteti (Equity)</span>
+                <span id="stat-equity" class="text-xl md:text-3xl font-bold text-amber-400">$0.00</span>
             </div>
-            <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl flex flex-col justify-center">
-                <span class="text-xs text-slate-400 font-medium mb-1">Unrealized PnL</span>
-                <span id="stat-pnl" class="text-3xl font-bold text-emerald-400">$0.00</span>
+            <div class="bg-slate-900 border border-slate-800 p-4 md:p-5 rounded-2xl flex flex-col justify-center">
+                <span class="text-[10px] md:text-xs text-slate-400 font-medium mb-1">Unrealized PnL</span>
+                <span id="stat-pnl" class="text-xl md:text-3xl font-bold text-emerald-400">$0.00</span>
             </div>
-            <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl flex flex-col justify-center">
-                <span class="text-xs text-slate-400 font-medium mb-1">Pozicione Aktive</span>
-                <span id="stat-positions" class="text-3xl font-bold text-cyan-400">0</span>
+            <div class="bg-slate-900 border border-slate-800 p-4 md:p-5 rounded-2xl flex flex-col justify-center">
+                <span class="text-[10px] md:text-xs text-slate-400 font-medium mb-1">Pozicione Aktive</span>
+                <span id="stat-positions" class="text-xl md:text-3xl font-bold text-cyan-400">0</span>
             </div>
-            <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl flex flex-col justify-center">
-                <span class="text-xs text-slate-400 font-medium mb-1">Margin Ratio</span>
-                <span id="margin-ratio" class="text-3xl font-bold text-orange-400">0%</span>
+            <div class="bg-slate-900 border border-slate-800 p-4 md:p-5 rounded-2xl flex flex-col justify-center">
+                <span class="text-[10px] md:text-xs text-slate-400 font-medium mb-1">Margin Ratio</span>
+                <span id="margin-ratio" class="text-xl md:text-3xl font-bold text-orange-400">0%</span>
             </div>
-            <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl flex flex-col justify-center">
-                <span class="text-xs text-slate-400 font-medium mb-1">Funding Fee</span>
-                <span id="funding-fee" class="text-3xl font-bold text-cyan-400">$0.00</span>
+            <div class="bg-slate-900 border border-slate-800 p-4 md:p-5 rounded-2xl flex flex-col justify-center">
+                <span class="text-[10px] md:text-xs text-slate-400 font-medium mb-1">Funding Fee</span>
+                <span id="funding-fee" class="text-xl md:text-3xl font-bold text-cyan-400">$0.00</span>
             </div>
-            <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl flex flex-col justify-center">
-                <span class="text-xs text-slate-400 font-medium mb-1">Daily PnL</span>
-                <span id="daily-pnl" class="text-3xl font-bold text-emerald-400">$0.00</span>
+            <div class="bg-slate-900 border border-slate-800 p-4 md:p-5 rounded-2xl flex flex-col justify-center">
+                <span class="text-[10px] md:text-xs text-slate-400 font-medium mb-1">Daily PnL</span>
+                <span id="daily-pnl" class="text-xl md:text-3xl font-bold text-emerald-400">$0.00</span>
             </div>
-            <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl flex flex-col justify-center">
-                <span class="text-xs text-slate-400 font-medium mb-1">Realized PnL</span>
-                <span id="realized-pnl" class="text-3xl font-bold text-blue-400">$0.00</span>
+            <div class="bg-slate-900 border border-slate-800 p-4 md:p-5 rounded-2xl flex flex-col justify-center">
+                <span class="text-[10px] md:text-xs text-slate-400 font-medium mb-1">Realized PnL</span>
+                <span id="realized-pnl" class="text-xl md:text-3xl font-bold text-blue-400">$0.00</span>
             </div>
         </div>
 
-        <!-- ========================= -->
         <!-- LIVE POSITION CARDS -->
-        <!-- ========================= -->
-        <div id="position-cards" class="grid grid-cols-3 gap-4 mb-5"></div>
+        <!-- Ndryshimi 5: 1 kolonë në telefon, 3 në kompjuter -->
+        <div id="position-cards" class="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-4 mb-2 md:mb-5"></div>
 
-        <!-- ========================= -->
-        <!-- LIVE OPEN POSITIONS -->
-        <!-- ========================= -->
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
+        <!-- LIVE OPEN POSITIONS (Tabela) -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 md:p-5 overflow-hidden w-full">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-sm font-bold text-slate-300 flex items-center gap-2">
                     <i data-lucide="briefcase" class="w-4 h-4 text-cyan-400"></i>
                     Pozicionet LIVE
                 </h3>
-                <span class="text-xs text-slate-500">
+                <span class="text-[10px] md:text-xs text-slate-500">
                     Refresh 1s <span id="last-refresh" class="text-emerald-400 font-semibold ml-1">--</span>
                 </span>
             </div>
-            <div class="overflow-x-auto">
-                <table class="w-full text-xs text-left">
+            <div class="overflow-x-auto w-full">
+                <!-- Klasa w-[600px] md:w-full detyron tabelën të bëhet e lëvizshme majtas-djathtas pa prishur ekranin -->
+                <table class="w-[700px] md:w-full text-xs text-left">
                     <thead class="text-slate-500 border-b border-slate-800">
                         <tr>
                             <th class="py-2">Pair</th>
@@ -1200,10 +1200,9 @@ DASHBOARD_HTML = """
             </div>
         </div>
 
-        <!-- ===================================================== -->
         <!-- TRADINGVIEW -->
-        <!-- ===================================================== -->
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-1 overflow-hidden relative" style="height:65vh;">
+        <!-- Ndryshimi 6: Lartësia e TradingView u bë h-[400px] për telefonat dhe h-[65vh] për PC -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-1 overflow-hidden relative w-full h-[400px] lg:h-[65vh]">
             <iframe
                 id="tv-chart"
                 src="https://s.tradingview.com/widgetembed/?symbol=BINANCE:BTCUSDT.P&interval=5&theme=dark&style=1&hide_top_toolbar=1"
@@ -1213,14 +1212,15 @@ DASHBOARD_HTML = """
         </div>
 
         <!-- Bottom Row (Logs & Stats) -->
-        <div class="grid grid-cols-3 gap-6">
+        <!-- Ndryshimi 7: 1 kolonë në tel, 3 kolona në PC -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 pb-10 md:pb-0">
             <!-- Trade History -->
-            <div class="col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col h-64">
+            <div class="col-span-1 lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-4 md:p-5 flex flex-col h-64 w-full overflow-hidden">
                 <h3 class="text-sm font-bold text-slate-300 mb-3 flex items-center gap-2">
                     <i data-lucide="list" class="w-4 h-4 text-emerald-400"></i> Historiku & Sinjalet e Skanerit
                 </h3>
-                <div class="flex-1 overflow-y-auto pr-2">
-                    <table class="w-full text-left text-xs">
+                <div class="flex-1 overflow-x-auto overflow-y-auto pr-2">
+                    <table class="w-[500px] md:w-full text-left text-[10px] md:text-xs">
                         <thead class="sticky top-0 bg-slate-900 text-slate-500">
                             <tr><th class="pb-2 font-medium">Koha</th><th class="pb-2 font-medium">Lloji</th><th class="pb-2 font-medium">Mesazhi / Kushtet</th></tr>
                         </thead>
@@ -1231,7 +1231,7 @@ DASHBOARD_HTML = """
             </div>
 
             <!-- Setup Stats -->
-            <div class="col-span-1 bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col h-64">
+            <div class="col-span-1 bg-slate-900 border border-slate-800 rounded-2xl p-4 md:p-5 flex flex-col h-64 w-full">
                 <h3 class="text-sm font-bold text-slate-300 mb-4 flex items-center gap-2">
                     <i data-lucide="bar-chart-2" class="w-4 h-4 text-amber-400"></i> Performanca (W/L)
                 </h3>
@@ -1254,7 +1254,7 @@ DASHBOARD_HTML = """
     </div>
 
     <!-- Modal per Error -->
-    <div id="error-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center">
+    <div id="error-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-rose-500/30 p-6 rounded-2xl max-w-sm w-full text-center shadow-2xl shadow-rose-900/20">
             <i data-lucide="alert-circle" class="w-12 h-12 text-rose-500 mx-auto mb-3"></i>
             <h3 class="text-lg font-bold text-white mb-2">Gabim Lidhjeje</h3>
@@ -1262,6 +1262,15 @@ DASHBOARD_HTML = """
             <button onclick="document.getElementById('error-modal').classList.add('hidden')" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-medium py-2 rounded-lg transition-colors">Kuptova</button>
         </div>
     </div>
+    
+    <!-- Scripts per konfigurimin e Ikonave lucide -->
+    <script>
+        lucide.createIcons();
+        // Kodi yt javascript vazhdon këtu poshtë...
+    </script>
+</body>
+</html>
+"""
 
     <script>
         lucide.createIcons();
