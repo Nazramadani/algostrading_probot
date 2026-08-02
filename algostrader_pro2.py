@@ -1271,10 +1271,7 @@ DASHBOARD_HTML = """
 </body>
 </html>
 """
-
-    <script>
-        lucide.createIcons();
-
+ 
         // Menaxhimi i Liste se Cifteve (Pairs) UI
         const availablePairs = ['BTC/USDT', 'ETH/USDT', 'SOL/USDT', 'XAU/USDT', 'XRP/USDT', 'DOGE/USDT', 'ORCA/USDT', 'AVAX/USDT', 'LINK/USDT', 'AIOT/USDT', 'PEPE/USDT', 'FLOKI/USDT'];
         let selectedPairs = new Set(['BTC/USDT']);
