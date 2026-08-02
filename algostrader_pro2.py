@@ -1594,12 +1594,26 @@ def api_history():
 
 import os
 
+import os
+import urllib.request # <--- Na duhet kjo për të gjetur IP-në
+
 # =====================================================================
 # START
 # =====================================================================
 if __name__ == '__main__':
     print('=' * 70)
     print('NazRmd ProBot GUI - STARTING LIVE SERVER ON RENDER...')
+    
+    # Kodi magjik që gjen IP-në e serverit dhe e printon në Logs
+    try:
+        render_ip = urllib.request.urlopen('https://api.ipify.org').read().decode('utf8')
+        print('\n' + '🔥' * 20)
+        print('>>> IP-JA E BOTIT ËSHTË: ' + render_ip + ' <<<')
+        print('Kopjo këtë IP dhe vendose te kutia e verdhë në Binance!')
+        print('🔥' * 20 + '\n')
+    except Exception as e:
+        print('Nuk arritëm të gjejmë IP-në: ', e)
+        
     print('=' * 70)
 
     # Render ka nevojë për portin e tij dhe adresën 0.0.0.0 për të dalë online
