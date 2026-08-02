@@ -1574,17 +1574,16 @@ def stop_bot():
 def api_history():
     return jsonify(list(trade_history))
 
+import os
+
 # =====================================================================
 # START
 # =====================================================================
 if __name__ == '__main__':
     print('=' * 70)
-    print('NazRmd ProBot GUI - STARTING LIVE SERVER...')
+    print('NazRmd ProBot GUI - STARTING LIVE SERVER ON RENDER...')
     print('=' * 70)
 
-    def open_browser():
-        time.sleep(1.5)
-        webbrowser.open('http://127.0.0.1:5000')
-
-    threading.Thread(target=open_browser, daemon=True).start()
-    app.run(host='127.0.0.1', port=5000, debug=False)
+    # Render ka nevojë për portin e tij dhe adresën 0.0.0.0 për të dalë online
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
