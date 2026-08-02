@@ -29,6 +29,29 @@ from engine.multi_timeframe_engine import MultiTimeframeEngine
 from engine.trade_manager import TradeManager
 from keep_alive import keep_alive
 keep_alive()
+from functools import wraps
+from flask import request, Response
+
+# =====================================================================
+# SISTEMI I SIGURISË (LOGIN)
+# =====================================================================
+def check_auth(username, password):
+    # Këtu vendos Emrin dhe Fjalëkalimin që dëshiron të përdorësh
+    return username == '123123' and password == '123123'
+
+def authenticate():
+    return Response(
+    'Qasje e ndaluar! Ju lutem fusni kredencialet e sakta.', 401,
+    {'WWW-Authenticate': 'Basic realm="Login Required"'})
+
+def requires_auth(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        auth = request.authorization
+        if not auth or not check_auth(auth.username, auth.password):
+            return authenticate()
+        return f(*args, **kwargs)
+    return decorated
 
 # Këtu vazhdon kodi yt i zakonshëm i botit...
 
@@ -1454,10 +1477,12 @@ DASHBOARD_HTML = """
 # API ROUTES
 # =====================================================================
 @app.route('/')
+@requires_auth
 def home():
     return render_template_string(DASHBOARD_HTML)
 
 @app.route('/api/status')
+@requires_auth
 def get_status():
     return jsonify({
         "account": account_overview,
@@ -1472,6 +1497,7 @@ def get_status():
 
 @app.route('/api/config', methods=['POST'])
 @app.route('/api/start', methods=['POST'])
+@requires_auth
 def start_bot():
     global bot_thread
     global position_monitor_thread
